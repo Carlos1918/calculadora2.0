@@ -1,1 +1,2 @@
 -keep class com.google.android.gms.ads.** { *; }
+-keep class androidx.room.** { *; }

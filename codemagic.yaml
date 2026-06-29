@@ -1,6 +1,6 @@
 workflows:
   android-workflow:
-    name: TraderMind MC Android Build
+    name: TraderMind MC Full Build
     max_build_duration: 60
     environment:
       java: 11
