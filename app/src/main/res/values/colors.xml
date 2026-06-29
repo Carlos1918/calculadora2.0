@@ -11,4 +11,5 @@
     <color name="gray">#6B7280</color>
     <color name="result_bg">#F0F0FF</color>
     <color name="result_border">#C7D2FE</color>
+    <color name="ic_launcher_background">#4F46E5</color>
 </resources>
