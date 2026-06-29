@@ -1,6 +1,8 @@
 package com.tradermindmc.app
 
+import android.graphics.Color
 import android.os.Bundle
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -40,16 +42,29 @@ class AddTradeActivity : AppCompatActivity() {
         val notesInput = findViewById<EditText>(R.id.input_notes)
         val saveBtn = findViewById<Button>(R.id.btn_save)
 
-        // Setup pair spinner
-        val pairAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, pairs)
-        pairAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        pairSpinner.adapter = pairAdapter
+        // Adapter with black text on white background
+        fun blackTextAdapter(items: List<String>): ArrayAdapter<String> {
+            return object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items) {
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val tv = super.getView(position, convertView, parent) as TextView
+                    tv.setTextColor(Color.BLACK)
+                    tv.setBackgroundColor(Color.WHITE)
+                    return tv
+                }
+                override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val tv = super.getDropDownView(position, convertView, parent) as TextView
+                    tv.setTextColor(Color.BLACK)
+                    tv.setBackgroundColor(Color.WHITE)
+                    tv.setPadding(32, 14, 32, 14)
+                    return tv
+                }
+            }
+        }
 
-        // Setup direction spinner
+        pairSpinner.adapter = blackTextAdapter(pairs)
+
         val directions = listOf(getString(R.string.buy), getString(R.string.sell))
-        val dirAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, directions)
-        dirAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        directionSpinner.adapter = dirAdapter
+        directionSpinner.adapter = blackTextAdapter(directions)
 
         saveBtn.setOnClickListener {
             val pair = pairSpinner.selectedItem.toString()
