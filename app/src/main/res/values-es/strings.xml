@@ -32,10 +32,10 @@
     <string name="session_tokyo">Sesión Tokio</string>
     <string name="session_sydney">Sesión Sídney</string>
     <string name="session_closed">Todas las sesiones cerradas</string>
-    <string name="goal_progress">Balance: $%.2f / Meta: $%.2f (%.1f%%)</string>
+    <string name="goal_progress" formatted="false">Balance: $%.2f / Meta: $%.2f (%.1f%%)</string>
     <string name="drawdown_exceeded">⚠ ¡Drawdown máximo superado! Para de operar hoy.</string>
-    <string name="drawdown_safe">✓ Dentro del límite de %.1f%% de drawdown</string>
-    <string name="projection_months">Alcanzas la meta en ~%d meses a $%.0f/mes</string>
+    <string name="drawdown_safe" formatted="false">✓ Dentro del límite de %.1f%% de drawdown</string>
+    <string name="projection_months" formatted="false">Alcanzas la meta en ~%d meses a $%.0f/mes</string>
     <string name="winrate">Win Rate</string>
     <string name="total_trades">Total Trades</string>
     <string name="wins">Ganadas</string>
