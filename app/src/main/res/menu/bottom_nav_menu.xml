@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_lot_size"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Lot Size"/>
+    <item
+        android:id="@+id/nav_risk_reward"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="R:R"/>
+    <item
+        android:id="@+id/nav_pip_value"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Pip Value"/>
+</menu>
