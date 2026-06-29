@@ -1,5 +1,6 @@
 package com.tradermindmc.app.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +14,7 @@ class LotSizeFragment : Fragment() {
 
     private lateinit var adView: AdView
 
-    // Par -> pip value por lote estándar en USD
     private val allPairs = linkedMapOf(
-        // Forex Mayores
         "── FOREX MAYORES ──" to 0.0,
         "EURUSD" to 10.0,
         "GBPUSD" to 10.0,
@@ -24,7 +23,6 @@ class LotSizeFragment : Fragment() {
         "USDCAD" to 7.70,
         "USDCHF" to 11.20,
         "USDJPY" to 9.10,
-        // Forex Cruces EUR
         "── CRUCES EUR ──" to 0.0,
         "EURGBP" to 12.80,
         "EURJPY" to 9.10,
@@ -32,33 +30,27 @@ class LotSizeFragment : Fragment() {
         "EURCAD" to 7.70,
         "EURAUD" to 10.0,
         "EURNZD" to 10.0,
-        // Forex Cruces GBP
         "── CRUCES GBP ──" to 0.0,
         "GBPJPY" to 9.10,
         "GBPCHF" to 11.20,
         "GBPCAD" to 7.70,
         "GBPAUD" to 10.0,
         "GBPNZD" to 10.0,
-        // Forex Cruces AUD
         "── CRUCES AUD ──" to 0.0,
         "AUDJPY" to 9.10,
         "AUDCAD" to 7.70,
         "AUDCHF" to 11.20,
         "AUDNZD" to 10.0,
-        // Forex Cruces NZD
         "── CRUCES NZD ──" to 0.0,
         "NZDJPY" to 9.10,
         "NZDCAD" to 7.70,
         "NZDCHF" to 11.20,
-        // Forex Cruces JPY
         "── CRUCES JPY ──" to 0.0,
         "CADJPY" to 9.10,
         "CHFJPY" to 9.10,
-        // Metales
         "── METALES ──" to 0.0,
         "XAUUSD (Oro)" to 1.0,
         "XAGUSD (Plata)" to 50.0,
-        // Índices Sintéticos
         "── ÍNDICES SINTÉTICOS ──" to 0.0,
         "Boom 1000" to 1.0,
         "Boom 500" to 1.0,
@@ -94,28 +86,41 @@ class LotSizeFragment : Fragment() {
         val pairNames = allPairs.keys.toList()
 
         val adapter = object : ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, pairNames) {
+
+            // Vista colapsada del spinner (el label que se ve siempre)
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val tv = super.getView(position, convertView, parent) as TextView
+                tv.setTextColor(Color.BLACK)
+                tv.setBackgroundColor(Color.WHITE)
+                tv.textSize = 14f
+                return tv
+            }
+
+            // Vista desplegada (la lista de opciones)
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val tv = super.getDropDownView(position, convertView, parent) as TextView
+                tv.setBackgroundColor(Color.WHITE)
+                if (allPairs[pairNames[position]] == 0.0) {
+                    // Categorías
+                    tv.setTextColor(Color.parseColor("#4F46E5"))
+                    tv.textSize = 11f
+                    tv.setPadding(16, 14, 16, 4)
+                } else {
+                    // Pares normales
+                    tv.setTextColor(Color.BLACK)
+                    tv.textSize = 14f
+                    tv.setPadding(32, 12, 16, 12)
+                }
+                return tv
+            }
+
             override fun isEnabled(position: Int): Boolean {
                 return allPairs[pairNames[position]] != 0.0
             }
-            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val v = super.getDropDownView(position, convertView, parent) as TextView
-                if (allPairs[pairNames[position]] == 0.0) {
-                    v.setTextColor(resources.getColor(R.color.purple_primary, null))
-                    v.textSize = 12f
-                    v.setPadding(16, 12, 16, 4)
-                } else {
-                    v.setTextColor(resources.getColor(android.R.color.black, null))
-                    v.textSize = 14f
-                    v.setPadding(32, 10, 16, 10)
-                }
-                return v
-            }
         }
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        pairSpinner.adapter = adapter
 
-        // Seleccionar EURUSD por defecto (primer par real)
-        pairSpinner.setSelection(1)
+        pairSpinner.adapter = adapter
+        pairSpinner.setSelection(1) // EURUSD por defecto
 
         calculateBtn.setOnClickListener {
             val balance = balanceInput.text.toString().toDoubleOrNull()
@@ -128,7 +133,6 @@ class LotSizeFragment : Fragment() {
                 Toast.makeText(requireContext(), "Selecciona un par válido", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
             if (balance == null || risk == null || sl == null || sl == 0.0) {
                 Toast.makeText(requireContext(), "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -139,12 +143,11 @@ class LotSizeFragment : Fragment() {
 
             resultCard.visibility = View.VISIBLE
             resultValue.text = String.format("%.2f lotes", lotSize)
-            resultSubtitle.text = String.format("Arriesgando \$%.2f de tu cuenta | Pip value: \$%.2f", riskAmount, pipValue)
+            resultSubtitle.text = String.format("Arriesgando \$%.2f | Pip value: \$%.2f", riskAmount, pipValue)
         }
 
         adView = view.findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
+        adView.loadAd(AdRequest.Builder().build())
     }
 
     override fun onPause() { adView.pause(); super.onPause() }
