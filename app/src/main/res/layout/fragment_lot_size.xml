@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5F5FF">
+    android:background="#FFFFFF">
 
     <!-- Header -->
     <LinearLayout
@@ -14,7 +14,6 @@
         android:padding="16dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,7 +21,6 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,79 +40,173 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="BALANCE DE CUENTA ($)" android:textSize="11sp"
-                android:textColor="#6B7280" android:textStyle="bold" android:layout_marginBottom="6dp"/>
-
-            <EditText android:id="@+id/input_balance"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:hint="ej: 1000" android:inputType="numberDecimal"
-                android:background="@drawable/input_bg" android:padding="12dp"
+            <!-- Balance -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BALANCE DE CUENTA ($)"
+                android:textSize="11sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp"/>
+            <EditText
+                android:id="@+id/input_balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ej: 1000"
+                android:textColor="#000000"
+                android:textColorHint="#999999"
+                android:inputType="numberDecimal"
+                android:background="@drawable/input_bg"
+                android:padding="12dp"
                 android:layout_marginBottom="16dp"/>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:layout_marginBottom="16dp">
+            <!-- Riesgo y SL -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
 
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical" android:layout_marginEnd="8dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="% DE RIESGO" android:textSize="11sp"
-                        android:textColor="#6B7280" android:textStyle="bold" android:layout_marginBottom="6dp"/>
-                    <EditText android:id="@+id/input_risk"
-                        android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:hint="ej: 1" android:inputType="numberDecimal"
-                        android:background="@drawable/input_bg" android:padding="12dp"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="% DE RIESGO"
+                        android:textSize="11sp"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="6dp"/>
+                    <EditText
+                        android:id="@+id/input_risk"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="ej: 1"
+                        android:textColor="#000000"
+                        android:textColorHint="#999999"
+                        android:inputType="numberDecimal"
+                        android:background="@drawable/input_bg"
+                        android:padding="12dp"/>
                 </LinearLayout>
 
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="8dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="STOP LOSS (PIPS)" android:textSize="11sp"
-                        android:textColor="#6B7280" android:textStyle="bold" android:layout_marginBottom="6dp"/>
-                    <EditText android:id="@+id/input_sl"
-                        android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:hint="ej: 20" android:inputType="numberDecimal"
-                        android:background="@drawable/input_bg" android:padding="12dp"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="STOP LOSS (PIPS)"
+                        android:textSize="11sp"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="6dp"/>
+                    <EditText
+                        android:id="@+id/input_sl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="ej: 20"
+                        android:textColor="#000000"
+                        android:textColorHint="#999999"
+                        android:inputType="numberDecimal"
+                        android:background="@drawable/input_bg"
+                        android:padding="12dp"/>
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="PAR / INSTRUMENTO" android:textSize="11sp"
-                android:textColor="#6B7280" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+            <!-- Par -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PAR / INSTRUMENTO"
+                android:textSize="11sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp"/>
 
-            <Spinner android:id="@+id/spinner_pair"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:background="@drawable/input_bg" android:padding="12dp"
+            <Spinner
+                android:id="@+id/spinner_pair"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_bg"
+                android:padding="12dp"
                 android:layout_marginBottom="24dp"/>
 
-            <Button android:id="@+id/btn_calculate"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
+            <!-- Botón -->
+            <Button
+                android:id="@+id/btn_calculate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Calcular tamaño de lote"
                 android:backgroundTint="#4F46E5"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:padding="14dp"/>
 
-            <!-- Result Card -->
-            <LinearLayout android:id="@+id/result_card"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
+            <!-- Resultado -->
+            <LinearLayout
+                android:id="@+id/result_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/result_bg"
                 android:padding="20dp"
                 android:layout_marginTop="20dp"
                 android:visibility="gone">
 
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="LOTE RECOMENDADO" android:textSize="11sp"
-                    android:textColor="#6366F1" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LOTE RECOMENDADO"
+                    android:textSize="11sp"
+                    android:textColor="#6366F1"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="6dp"/>
 
-                <TextView android:id="@+id/result_value"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:textSize="28sp" android:textColor="#3730A3" android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/result_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="28sp"
+                    android:textColor="#3730A3"
+                    android:textStyle="bold"/>
 
-                <TextView android:id="@+id/result_subtitle"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:textSize="13sp" android:textColor="#6366F1" android:layout_marginTop="4dp"/>
+                <TextView
+                    android:id="@+id/result_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="#6366F1"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+
+            <!-- Info box -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFF8E1"
+                android:padding="14dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚠ "
+                    android:textColor="#B45309"
+                    android:textSize="13sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nunca arriesgues más del 1-2% por operación para proteger tu capital."
+                    android:textColor="#000000"
+                    android:textSize="12sp"/>
             </LinearLayout>
 
         </LinearLayout>

@@ -13,6 +13,68 @@ class LotSizeFragment : Fragment() {
 
     private lateinit var adView: AdView
 
+    // Par -> pip value por lote estándar en USD
+    private val allPairs = linkedMapOf(
+        // Forex Mayores
+        "── FOREX MAYORES ──" to 0.0,
+        "EURUSD" to 10.0,
+        "GBPUSD" to 10.0,
+        "AUDUSD" to 10.0,
+        "NZDUSD" to 10.0,
+        "USDCAD" to 7.70,
+        "USDCHF" to 11.20,
+        "USDJPY" to 9.10,
+        // Forex Cruces EUR
+        "── CRUCES EUR ──" to 0.0,
+        "EURGBP" to 12.80,
+        "EURJPY" to 9.10,
+        "EURCHF" to 11.20,
+        "EURCAD" to 7.70,
+        "EURAUD" to 10.0,
+        "EURNZD" to 10.0,
+        // Forex Cruces GBP
+        "── CRUCES GBP ──" to 0.0,
+        "GBPJPY" to 9.10,
+        "GBPCHF" to 11.20,
+        "GBPCAD" to 7.70,
+        "GBPAUD" to 10.0,
+        "GBPNZD" to 10.0,
+        // Forex Cruces AUD
+        "── CRUCES AUD ──" to 0.0,
+        "AUDJPY" to 9.10,
+        "AUDCAD" to 7.70,
+        "AUDCHF" to 11.20,
+        "AUDNZD" to 10.0,
+        // Forex Cruces NZD
+        "── CRUCES NZD ──" to 0.0,
+        "NZDJPY" to 9.10,
+        "NZDCAD" to 7.70,
+        "NZDCHF" to 11.20,
+        // Forex Cruces JPY
+        "── CRUCES JPY ──" to 0.0,
+        "CADJPY" to 9.10,
+        "CHFJPY" to 9.10,
+        // Metales
+        "── METALES ──" to 0.0,
+        "XAUUSD (Oro)" to 1.0,
+        "XAGUSD (Plata)" to 50.0,
+        // Índices Sintéticos
+        "── ÍNDICES SINTÉTICOS ──" to 0.0,
+        "Boom 1000" to 1.0,
+        "Boom 500" to 1.0,
+        "Crash 1000" to 1.0,
+        "Crash 500" to 0.5,
+        "Crash 600" to 0.6,
+        "Step Index" to 0.1,
+        "Volatility 10" to 0.2,
+        "Volatility 25" to 0.5,
+        "Volatility 50" to 1.0,
+        "Volatility 75" to 1.5,
+        "Volatility 100" to 2.0,
+        "Range Break 100" to 0.5,
+        "Range Break 200" to 1.0
+    )
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_lot_size, container, false)
     }
@@ -29,36 +91,43 @@ class LotSizeFragment : Fragment() {
         val resultValue = view.findViewById<TextView>(R.id.result_value)
         val resultSubtitle = view.findViewById<TextView>(R.id.result_subtitle)
 
-        // Configurar spinner de pares
-        val pairs = arrayOf(
-            "EURUSD / GBPUSD",
-            "USDJPY",
-            "XAUUSD (Oro)",
-            "Boom 1000",
-            "Crash 1000",
-            "Crash 600",
-            "Crash 500"
-        )
-        val pipValues = mapOf(
-            "EURUSD / GBPUSD" to 10.0,
-            "USDJPY" to 10.0,
-            "XAUUSD (Oro)" to 10.0,
-            "Boom 1000" to 1.0,
-            "Crash 1000" to 1.0,
-            "Crash 600" to 0.6,
-            "Crash 500" to 0.5
-        )
+        val pairNames = allPairs.keys.toList()
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, pairs)
+        val adapter = object : ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, pairNames) {
+            override fun isEnabled(position: Int): Boolean {
+                return allPairs[pairNames[position]] != 0.0
+            }
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val v = super.getDropDownView(position, convertView, parent) as TextView
+                if (allPairs[pairNames[position]] == 0.0) {
+                    v.setTextColor(resources.getColor(R.color.purple_primary, null))
+                    v.textSize = 12f
+                    v.setPadding(16, 12, 16, 4)
+                } else {
+                    v.setTextColor(resources.getColor(android.R.color.black, null))
+                    v.textSize = 14f
+                    v.setPadding(32, 10, 16, 10)
+                }
+                return v
+            }
+        }
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         pairSpinner.adapter = adapter
+
+        // Seleccionar EURUSD por defecto (primer par real)
+        pairSpinner.setSelection(1)
 
         calculateBtn.setOnClickListener {
             val balance = balanceInput.text.toString().toDoubleOrNull()
             val risk = riskInput.text.toString().toDoubleOrNull()
             val sl = slInput.text.toString().toDoubleOrNull()
             val selectedPair = pairSpinner.selectedItem.toString()
-            val pipValue = pipValues[selectedPair] ?: 10.0
+            val pipValue = allPairs[selectedPair] ?: 10.0
+
+            if (pipValue == 0.0) {
+                Toast.makeText(requireContext(), "Selecciona un par válido", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             if (balance == null || risk == null || sl == null || sl == 0.0) {
                 Toast.makeText(requireContext(), "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
@@ -70,27 +139,15 @@ class LotSizeFragment : Fragment() {
 
             resultCard.visibility = View.VISIBLE
             resultValue.text = String.format("%.2f lotes", lotSize)
-            resultSubtitle.text = String.format("Arriesgando $%.2f de tu cuenta", riskAmount)
+            resultSubtitle.text = String.format("Arriesgando \$%.2f de tu cuenta | Pip value: \$%.2f", riskAmount, pipValue)
         }
 
-        // Cargar anuncio
         adView = view.findViewById(R.id.adView)
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
     }
 
-    override fun onPause() {
-        adView.pause()
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        adView.resume()
-    }
-
-    override fun onDestroy() {
-        adView.destroy()
-        super.onDestroy()
-    }
+    override fun onPause() { adView.pause(); super.onPause() }
+    override fun onResume() { super.onResume(); adView.resume() }
+    override fun onDestroy() { adView.destroy(); super.onDestroy() }
 }

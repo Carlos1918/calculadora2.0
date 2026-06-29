@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5F5FF">
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="DIRECCIÓN" android:textSize="11sp"
-                android:textColor="#6B7280" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+                android:textColor="#000000" android:textStyle="bold" android:layout_marginBottom="6dp"/>
             <Spinner android:id="@+id/spinner_direction"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:background="@drawable/input_bg" android:padding="12dp"
@@ -34,7 +34,7 @@
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="PRECIO DE ENTRADA" android:textSize="11sp"
-                android:textColor="#6B7280" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+                android:textColor="#000000" android:textStyle="bold" android:layout_marginBottom="6dp"/>
             <EditText android:id="@+id/input_entry"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:hint="ej: 1.08500" android:inputType="numberDecimal"
@@ -47,7 +47,7 @@
                     android:layout_weight="1" android:orientation="vertical" android:layout_marginEnd="8dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="STOP LOSS" android:textSize="11sp"
-                        android:textColor="#6B7280" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+                        android:textColor="#000000" android:textStyle="bold" android:layout_marginBottom="6dp"/>
                     <EditText android:id="@+id/input_sl"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:hint="ej: 1.08300" android:inputType="numberDecimal"
@@ -57,7 +57,7 @@
                     android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="8dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="TAKE PROFIT" android:textSize="11sp"
-                        android:textColor="#6B7280" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+                        android:textColor="#000000" android:textStyle="bold" android:layout_marginBottom="6dp"/>
                     <EditText android:id="@+id/input_tp"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:hint="ej: 1.08900" android:inputType="numberDecimal"
